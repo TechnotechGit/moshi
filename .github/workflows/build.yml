@@ -20,15 +20,19 @@ jobs:
           toolchain: stable # or a specific version like '1.78.0'
           override: true
 
-      - name: Build moshi-server (Release)
+      - name: Install cuda
         uses: Jimver/cuda-toolkit@v0.2.26
         id: cuda-toolkit
-        with:
-          command: build
-          args: --release --features cuda --bin moshi-server
+        
+      - run: nvcc -V
 
-      - name: Upload built binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: moshi-server-binary
-          path: target/release/moshi-server
+      # - name: Build moshi-server (Release)
+        # with:
+        #   command: build
+        #   args: --release --features cuda --bin moshi-server
+
+      # - name: Upload built binary
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: moshi-server-binary
+      #     path: target/release/moshi-server
