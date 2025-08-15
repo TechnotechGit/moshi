@@ -23,7 +23,8 @@ jobs:
       - name: Install cuda
         uses: Jimver/cuda-toolkit@v0.2.26
         id: cuda-toolkit
-        
+        with:
+          use-local-cache: true
       - run: nvcc -V
 
       # - name: Build moshi-server (Release)
