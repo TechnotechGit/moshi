@@ -1,0 +1,33 @@
+name: Build Moshi Server
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable # or a specific version like '1.78.0'
+          override: true
+
+      - name: Build moshi-server (Release)
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --features cuda --bin moshi-server
+
+      - name: Upload built binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: moshi-server-binary
+          path: target/release/moshi-server
